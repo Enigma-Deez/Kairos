@@ -1,3 +1,68 @@
+# Kairos
+
+Kairos is a **habit-tracking and productivity platform** inspired by GitHub’s contribution graph, the Life of Discipline app, and concepts from *Atomic Habits* (James Clear), Alex Hormozi, and Naval Ravikant — blended with Christian values and a focus on balance, rest, and sustainable growth.
+
+## ✨ Features (Planned V1)
+- Offline-first (works without internet, via PWA and IndexedDB)
+- “Humanity mode” → account for mistakes, vacations, and missed days without breaking streaks
+- Habit dashboard with heatmap visualization
+- Blog/journaling space for reflections
+- Quick input for habits (unique UI for fast check-ins)
+- Mobile-first responsive design
+- AI-assisted habit reflection (offline-capable, lightweight, bounded to avoid overuse)
+
+## 📂 Project Structure
+- `src/app/` → Next.js App Router pages (Dashboard, Habit Management, Settings)
+- `src/components/` → UI components (ShadCN UI, Lucide icons, etc.)
+- `public/` → static assets, PWA service worker
+- `docs/` → extra documentation, design feedback, planning notes
+
+## 🚀 Getting Started
+1. Clone the repo:
+   ```bash
+   git clone https://github.com/<your-username>/kairos.git
+   cd kairos
+2. Install dependencies:
+
+npm install
+
+
+Run the dev server:
+
+npm run dev
+
+
+Open http://localhost:3000
+
+🛠️ Tech Stack
+
+Next.js
+ (App Router, Turbopack)
+
+React
+
+TailwindCSS
+
+ShadCN UI
+
+Lucide React
+
+react-calendar-heatmap
+
+IndexedDB
+ (offline storage)
+
+next-pwa
+ (PWA support)
+
+📝 License
+
+Currently private. Will decide open-source license before public release.
+
+
+---
+
+Use this file to keep track of external feedback (friends, peers, testers).
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
 ## Getting Started
