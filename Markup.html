@@ -1,0 +1,207 @@
+<html><head>
+<meta charset="utf-8"/>
+<link crossorigin="" href="https://fonts.gstatic.com/" rel="preconnect"/>
+<link as="style" href="https://fonts.googleapis.com/css2?display=swap&amp;family=Inter%3Awght%40400%3B500%3B600%3B700%3B900&amp;family=Noto+Sans%3Awght%40400%3B500%3B700%3B900" onload="this.rel='stylesheet'" rel="stylesheet"/>
+<title>Kairos Dashboard</title>
+<link href="data:image/x-icon;base64," rel="icon" type="image/x-icon"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
+<style type="text/tailwindcss">
+      :root {
+        --primary-color: #1dc962;
+        --dark-bg: #111827;
+        --secondary-dark-bg: #1F2937;
+        --border-color: #374151;
+        --text-primary: #F9FAFB;
+        --text-secondary: #9CA3AF;
+        --completed-color: #34D399;--missed-color: #EF4444;--rest-color: #3B82F6;}
+      .heatmap-grid {
+        display: grid;
+        grid-template-columns: repeat(53, 1fr);
+        gap: 4px;
+      }
+      .heatmap-cell {
+        aspect-ratio: 1/1;
+        border-radius: 2px;
+        position: relative;
+      }
+      .heatmap-cell .tooltip {
+        visibility: hidden;
+        width: 160px;
+        background-color: var(--secondary-dark-bg);
+        color: var(--text-primary);
+        text-align: left;
+        border-radius: 6px;
+        padding: 8px;
+        position: absolute;
+        z-index: 1;
+        bottom: 125%;
+        left: 50%;
+        margin-left: -80px;
+        opacity: 0;
+        transition: opacity 0.3s;
+        font-size: 12px;
+      }
+      .heatmap-cell:hover .tooltip {
+        visibility: visible;
+        opacity: 1;
+      }
+      .heatmap-cell.completed { background-color: var(--completed-color); }
+      .heatmap-cell.missed { background-color: var(--missed-color); }
+      .heatmap-cell.rest { background-color: var(--rest-color); }
+      .heatmap-cell.empty { background-color: #374151; }
+    </style>
+</head>
+<body class="bg-[var(--dark-bg)] text-[var(--text-primary)]" style='font-family: Inter, "Noto Sans", sans-serif;'>
+<div class="relative flex h-auto min-h-screen w-full flex-col group/design-root overflow-x-hidden">
+<div class="flex h-full grow flex-col">
+<header class="flex items-center justify-between whitespace-nowrap border-b border-solid border-[var(--border-color)] px-10 py-4">
+<div class="flex items-center gap-3 text-white">
+<svg class="h-6 w-6 text-[var(--primary-color)]" fill="none" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg"><path d="M4 4H17.3334V17.3334H30.6666V30.6666H44V44H4V4Z" fill="currentColor"></path></svg>
+<h1 class="text-xl font-bold tracking-tight">Kairos</h1>
+</div>
+<nav class="hidden md:flex items-center gap-6 text-sm font-medium text-[var(--text-secondary)]">
+<a class="text-[var(--text-primary)]" href="#">Dashboard</a>
+<a class="hover:text-[var(--text-primary)] transition-colors" href="#">Habits</a>
+<a class="hover:text-[var(--text-primary)] transition-colors" href="#">Reflections</a>
+<a class="hover:text-[var(--text-primary)] transition-colors" href="#">Settings</a>
+</nav>
+<div class="flex items-center gap-4">
+<div class="flex items-center gap-2 rounded-full bg-[var(--secondary-dark-bg)] px-3 py-1 text-xs text-[var(--text-secondary)]">
+<span class="material-symbols-outlined text-base">cloud_off</span>
+<span>Offline</span>
+</div>
+<button class="flex h-10 w-10 items-center justify-center rounded-full text-[var(--text-secondary)] hover:bg-[var(--secondary-dark-bg)] hover:text-[var(--text-primary)] transition-colors">
+<span class="material-symbols-outlined text-2xl">notifications</span>
+</button>
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBpVFZcwJXAFCL48srQI-LQ1pmpX3eaThczHp1_zLMHrfLqss2sv863OZ59k41eUDVp5MwxRF7qehNxk3hZhhCAGu3AuIBQD13sefbyUk2RdxMJdKnWYdPEQNfi4r0VGEia4XwqvJX6RT8SvIz6aatq1UObt7gUSkI1cxmJKwxAvEn3CpsB29x1NQ5cJGK5a7yD77tHrxyFyCQUpd-fL1h8Nm2h970KRyozHIk6JpN29RmUY-OwOgvvFusNAzVYwovmQxJyrTIMPBU");'></div>
+</div>
+</header>
+<main class="flex flex-1 justify-center py-10 px-4 sm:px-6 lg:px-8">
+<div class="w-full max-w-7xl space-y-12">
+<div class="text-left">
+<h2 class="text-4xl font-bold tracking-tight">Dashboard</h2>
+<p class="mt-3 text-lg text-[var(--text-secondary)]">Welcome back, let's make today count.</p>
+</div>
+<section class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+<div class="lg:col-span-2 space-y-8">
+<section>
+<div class="flex justify-between items-center mb-4">
+<h3 class="text-xl font-semibold">Habit Heatmap</h3>
+<div class="flex items-center gap-4 text-sm">
+<label class="flex items-center gap-2 cursor-pointer"><input checked="" class="form-checkbox bg-[var(--secondary-dark-bg)] border-[var(--border-color)] text-[var(--primary-color)] rounded-sm focus:ring-[var(--primary-color)]" type="checkbox"/><span>Read</span></label>
+<label class="flex items-center gap-2 cursor-pointer"><input checked="" class="form-checkbox bg-[var(--secondary-dark-bg)] border-[var(--border-color)] text-[var(--primary-color)] rounded-sm focus:ring-[var(--primary-color)]" type="checkbox"/><span>Workout</span></label>
+<label class="flex items-center gap-2 cursor-pointer"><input checked="" class="form-checkbox bg-[var(--secondary-dark-bg)] border-[var(--border-color)] text-[var(--primary-color)] rounded-sm focus:ring-[var(--primary-color)]" type="checkbox"/><span>Meditate</span></label>
+</div>
+</div>
+<div class="bg-[var(--secondary-dark-bg)] p-6 rounded-lg">
+<div class="heatmap-grid">
+<div class="heatmap-cell completed"><div class="tooltip"><b>Oct 23, 2023</b><br/>Read: Completed<br/>Workout: Completed</div></div>
+<div class="heatmap-cell completed"><div class="tooltip"><b>Oct 24, 2023</b><br/>Read: Completed<br/>Workout: Completed</div></div>
+<div class="heatmap-cell missed"><div class="tooltip"><b>Oct 25, 2023</b><br/>Read: Missed<br/>Workout: Missed</div></div>
+<div class="heatmap-cell completed"><div class="tooltip"><b>Oct 26, 2023</b><br/>Read: Completed<br/>Workout: Completed</div></div>
+<div class="heatmap-cell rest"><div class="tooltip"><b>Oct 27, 2023</b><br/>Rest Day</div></div>
+<div class="heatmap-cell completed"><div class="tooltip"><b>Oct 28, 2023</b><br/>Read: Completed<br/>Workout: Completed</div></div>
+<div class="heatmap-cell completed"><div class="tooltip"><b>Oct 29, 2023</b><br/>Read: Completed<br/>Workout: Completed</div></div>
+<script>
+                    const grid = document.querySelector('.heatmap-grid');
+                    const types = ['completed', 'missed', 'rest', 'empty'];
+                    for(let i = 0; i < 365 - 7; i++) {
+                      const cell = document.createElement('div');
+                      const type = types[Math.floor(Math.random() * types.length)];
+                      cell.className = `heatmap-cell ${type}`;
+                      const tooltip = document.createElement('div');
+                      tooltip.className = 'tooltip';
+                      tooltip.innerHTML = `<b>Date</b><br/>Habit Status`;
+                      cell.appendChild(tooltip);
+                      grid.appendChild(cell);
+                    }
+                  </script>
+</div>
+<div class="flex justify-end items-center mt-4 text-xs text-[var(--text-secondary)] space-x-4">
+<div class="flex items-center space-x-2"><div class="h-2.5 w-2.5 rounded-sm bg-[var(--completed-color)]"></div><span>Completed</span></div>
+<div class="flex items-center space-x-2"><div class="h-2.5 w-2.5 rounded-sm bg-[var(--missed-color)]"></div><span>Missed</span></div>
+<div class="flex items-center space-x-2"><div class="h-2.5 w-2.5 rounded-sm bg-[var(--rest-color)]"></div><span>Rest</span></div>
+<div class="flex items-center space-x-2"><div class="h-2.5 w-2.5 rounded-sm bg-[#374151]"></div><span>No Data</span></div>
+</div>
+</div>
+</section>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+<section>
+<h3 class="text-xl font-semibold mb-4">Quick Habit Log</h3>
+<div class="space-y-4">
+<div class="relative">
+<input class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-md text-[var(--text-primary)] focus:outline-0 focus:ring-2 focus:ring-[var(--primary-color)] focus:ring-offset-2 focus:ring-offset-[var(--dark-bg)] border border-[var(--border-color)] bg-[var(--secondary-dark-bg)] h-12 placeholder:text-[var(--text-secondary)] px-4 pr-12 text-base font-normal leading-normal" id="habit-log" name="habit-log" placeholder="Log a habit..." type="text"/>
+<button class="absolute inset-y-0 right-0 flex items-center justify-center w-12 text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors">
+<span class="material-symbols-outlined text-2xl">mic</span>
+</button>
+</div>
+<div class="grid grid-cols-3 gap-2">
+<button class="flex items-center justify-center rounded-md py-2 px-3 bg-[var(--secondary-dark-bg)] hover:bg-[var(--border-color)] transition-colors text-sm"><span class="material-symbols-outlined text-base mr-1.5">done</span>Read</button>
+<button class="flex items-center justify-center rounded-md py-2 px-3 bg-[var(--secondary-dark-bg)] hover:bg-[var(--border-color)] transition-colors text-sm"><span class="material-symbols-outlined text-base mr-1.5">done</span>Workout</button>
+<button class="flex items-center justify-center rounded-md py-2 px-3 bg-[var(--secondary-dark-bg)] hover:bg-[var(--border-color)] transition-colors text-sm"><span class="material-symbols-outlined text-base mr-1.5">done</span>Meditate</button>
+</div>
+</div>
+</section>
+<section>
+<h3 class="text-xl font-semibold mb-4">Stats</h3>
+<div class="grid grid-cols-2 gap-4 text-center">
+<div class="bg-[var(--secondary-dark-bg)] p-4 rounded-lg">
+<p class="text-3xl font-bold text-[var(--primary-color)]">21</p>
+<p class="text-sm text-[var(--text-secondary)]">Current Streak</p>
+</div>
+<div class="bg-[var(--secondary-dark-bg)] p-4 rounded-lg">
+<p class="text-3xl font-bold">54</p>
+<p class="text-sm text-[var(--text-secondary)]">Longest Streak</p>
+</div>
+<div class="bg-[var(--secondary-dark-bg)] p-4 rounded-lg">
+<p class="text-3xl font-bold">92%</p>
+<p class="text-sm text-[var(--text-secondary)]">Completion Rate</p>
+</div>
+<div class="bg-[var(--secondary-dark-bg)] p-4 rounded-lg">
+<p class="text-xl font-bold">W: 5/7 M: 22/30</p>
+<p class="text-sm text-[var(--text-secondary)]">Summaries</p>
+</div>
+</div>
+</section>
+</div>
+</div>
+<div class="space-y-8">
+<section>
+<h3 class="text-xl font-semibold mb-4">AI Daily Check-in</h3>
+<div class="bg-[var(--secondary-dark-bg)] p-6 rounded-lg space-y-4">
+<p class="text-[var(--text-secondary)]">Did you complete your workout today?</p>
+<div class="flex gap-4">
+<button class="flex-1 flex items-center justify-center rounded-md h-11 px-4 bg-[var(--primary-color)] text-[#111827] text-sm font-bold leading-normal tracking-wide hover:bg-opacity-90 transition-colors">Yes, I did!</button>
+<button class="flex-1 flex items-center justify-center rounded-md h-11 px-4 bg-[var(--border-color)] text-[var(--text-primary)] text-sm font-bold leading-normal tracking-wide hover:bg-opacity-80 transition-colors">Not yet</button>
+</div>
+</div>
+</section>
+<section>
+<h3 class="text-xl font-semibold mb-4">Daily Reflection</h3>
+<div class="bg-[var(--secondary-dark-bg)] p-6 rounded-lg">
+<details>
+<summary class="cursor-pointer text-[var(--text-primary)] font-medium">Write your reflection...</summary>
+<form class="mt-4 space-y-4">
+<div>
+<label class="sr-only" for="reflection">Reflect on your day</label>
+<textarea class="form-textarea flex w-full min-w-0 flex-1 resize-y overflow-hidden rounded-md text-[var(--text-primary)] focus:outline-0 focus:ring-2 focus:ring-[var(--primary-color)] focus:ring-offset-2 focus:ring-offset-[var(--dark-bg)] border border-[var(--border-color)] bg-[var(--dark-bg)] min-h-36 placeholder:text-[var(--text-secondary)] p-4 text-base font-normal leading-normal" id="reflection" name="reflection" placeholder="What went well today? What could be improved?"></textarea>
+</div>
+<div>
+<label class="sr-only" for="tags">Tags</label>
+<input class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-md text-[var(--text-primary)] focus:outline-0 focus:ring-2 focus:ring-[var(--primary-color)] focus:ring-offset-2 focus:ring-offset-[var(--dark-bg)] border border-[var(--border-color)] bg-[var(--dark-bg)] h-12 placeholder:text-[var(--text-secondary)] px-4 text-base font-normal leading-normal" id="tags" name="tags" placeholder="Add tags, e.g., #productivity, #gratitude" type="text"/>
+</div>
+<button class="flex w-full items-center justify-center rounded-md h-11 px-4 bg-[var(--primary-color)] text-[#111827] text-sm font-bold leading-normal tracking-wide hover:bg-opacity-90 transition-colors" type="submit">
+<span class="truncate">Save Reflection</span>
+</button>
+</form>
+</details>
+</div>
+</section>
+</div>
+</section>
+</div>
+</main>
+</div>
+</div>
+</body></html>
